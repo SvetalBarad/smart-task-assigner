@@ -29,6 +29,8 @@ export interface Task {
   skills: Skill[];
   createdAt: Date;
   aiAssigned: boolean;
+  projectId: string;
+  progressPercent: number;
 }
 
 export const PRIORITY_CONFIG: Record<Priority, { label: string; color: string }> = {
@@ -44,3 +46,27 @@ export const STATUS_CONFIG: Record<TaskStatus, { label: string; emoji: string }>
   "review": { label: "Review", emoji: "◑" },
   "done": { label: "Done", emoji: "●" },
 };
+
+export const SKILLS_LIST: Skill[] = [
+  "Python", "JavaScript", "TypeScript", "React", "HTML/CSS",
+  "Node.js", "Machine Learning", "Deep Learning", "UI/UX",
+  "Data Science", "DevOps", "Backend", "Frontend", "Database",
+  "API Design", "Testing", "Mobile", "Cloud",
+];
+
+export const PROJECT_COLORS = [
+  "from-blue-500 to-cyan-500",
+  "from-purple-500 to-pink-500",
+  "from-green-500 to-emerald-500",
+  "from-orange-500 to-red-500",
+  "from-indigo-500 to-blue-500",
+  "from-teal-500 to-green-500",
+] as const;
+
+export interface Project {
+  id: string;
+  name: string;
+  description: string;
+  createdAt: Date;
+  color: typeof PROJECT_COLORS[number];
+}

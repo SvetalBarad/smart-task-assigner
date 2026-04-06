@@ -5,12 +5,12 @@ import { AnimatePresence } from "framer-motion";
 interface KanbanBoardProps {
   tasks: Task[];
   members: TeamMember[];
-  onStatusChange: (taskId: string, status: TaskStatus) => void;
+  onTaskClick: (task: Task) => void;
 }
 
 const COLUMNS: TaskStatus[] = ["todo", "in-progress", "review", "done"];
 
-export function KanbanBoard({ tasks, members, onStatusChange }: KanbanBoardProps) {
+export function KanbanBoard({ tasks, members, onTaskClick }: KanbanBoardProps) {
   const memberMap = Object.fromEntries(members.map((m) => [m.id, m]));
 
   return (
@@ -40,7 +40,7 @@ export function KanbanBoard({ tasks, members, onStatusChange }: KanbanBoardProps
                     key={task.id}
                     task={task}
                     member={task.assigneeId ? memberMap[task.assigneeId] : undefined}
-                    onStatusChange={onStatusChange}
+                    onClick={onTaskClick}
                   />
                 ))}
               </AnimatePresence>

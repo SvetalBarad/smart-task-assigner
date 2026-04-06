@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run:*)",
+      "mcp__ide__getDiagnostics",
+      "Bash(node init_db.js)",
+      "Bash(git restore:*)",
+      "Bash(netstat -ano)",
+      "Bash(findstr :5000)",
+      "Bash(findstr :8080)",
+      "Bash(tasklist)",
+      "Bash(findstr node:*)",
+      "Bash(Get-Content:*)",
+      "Bash(curl -s http://localhost:8081/api/tasks/my -H \"Authorization: Bearer test\")",
+      "Bash(findstr :8501)",
+      "Bash(dir chatbot:*)"
+    ]
+  }
+}

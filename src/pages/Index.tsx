@@ -71,7 +71,7 @@ const Index = () => {
               </button>
             </div>
 
-            <AddTaskDialog members={members} onAdd={handleAddTask} />
+            <AddTaskDialog members={members} projectId="mock" onAdd={handleAddTask} />
           </div>
         </motion.div>
 

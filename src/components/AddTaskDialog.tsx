@@ -11,6 +11,7 @@ import { findBestAssignee, summarizeTask, detectSkills } from "@/lib/taskEngine"
 
 interface AddTaskDialogProps {
   members: TeamMember[];
+  projectId: string;
   onAdd: (task: Task) => void;
 }
 
@@ -21,7 +22,7 @@ const ALL_SKILLS: Skill[] = [
   "API Design", "Testing", "Mobile", "Cloud",
 ];
 
-export function AddTaskDialog({ members, onAdd }: AddTaskDialogProps) {
+export function AddTaskDialog({ members, projectId, onAdd }: AddTaskDialogProps) {
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -66,6 +67,8 @@ export function AddTaskDialog({ members, onAdd }: AddTaskDialogProps) {
       skills,
       createdAt: new Date(),
       aiAssigned: !!assignee,
+      projectId,
+      progressPercent: 0,
     };
 
     onAdd(newTask);

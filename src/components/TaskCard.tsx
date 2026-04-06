@@ -1,16 +1,17 @@
-import { Task, TeamMember, PRIORITY_CONFIG, STATUS_CONFIG } from "@/types/project";
+import { Task, TeamMember, PRIORITY_CONFIG, STATUS_CONFIG, TaskStatus } from "@/types/project";
 import { motion } from "framer-motion";
-import { Sparkles, GripVertical } from "lucide-react";
+import { Sparkles, GripVertical, Eye } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 interface TaskCardProps {
   task: Task;
   member?: TeamMember;
-  onStatusChange: (taskId: string, status: Task["status"]) => void;
+  onClick: (task: Task) => void;
 }
 
-export function TaskCard({ task, member, onStatusChange }: TaskCardProps) {
+export function TaskCard({ task, member, onClick }: TaskCardProps) {
   const priority = PRIORITY_CONFIG[task.priority];
+  const statusConfig = STATUS_CONFIG[task.status];
 
   return (
     <motion.div
@@ -18,7 +19,8 @@ export function TaskCard({ task, member, onStatusChange }: TaskCardProps) {
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -8 }}
-      className="glass-card rounded-lg p-3.5 group cursor-pointer hover:border-primary/30 transition-all duration-200"
+      onClick={() => onClick(task)}
+      className="glass-card rounded-lg p-3.5 group cursor-pointer hover:border-primary/30 transition-all duration-200 hover:shadow-lg"
     >
       <div className="flex items-start gap-2">
         <GripVertical className="w-4 h-4 text-muted-foreground/30 mt-0.5 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -43,7 +45,7 @@ export function TaskCard({ task, member, onStatusChange }: TaskCardProps) {
 
           {/* Summary */}
           {task.summary && (
-            <p className="text-xs text-muted-foreground leading-relaxed mb-2.5">
+            <p className="text-xs text-muted-foreground leading-relaxed mb-2.5 line-clamp-2">
               {task.summary}
             </p>
           )}
@@ -62,6 +64,18 @@ export function TaskCard({ task, member, onStatusChange }: TaskCardProps) {
             )}
           </div>
 
+          {/* Status Badge & Assignee */}
+          <div className="flex items-center justify-between gap-2 mb-2">
+            <span className={`text-[10px] px-2 py-1 rounded font-medium ${
+              task.status === 'done' ? 'bg-green-500/20 text-green-500' :
+              task.status === 'review' ? 'bg-yellow-500/20 text-yellow-500' :
+              task.status === 'in-progress' ? 'bg-blue-500/20 text-blue-500' :
+              'bg-muted text-muted-foreground'
+            }`}>
+              {statusConfig.label}
+            </span>
+          </div>
+
           {/* Assignee */}
           <div className="flex items-center justify-between">
             {member ? (
@@ -74,9 +88,7 @@ export function TaskCard({ task, member, onStatusChange }: TaskCardProps) {
             ) : (
               <span className="text-[11px] text-muted-foreground/50 italic">Unassigned</span>
             )}
-            <span className="text-[10px] text-muted-foreground/40 font-mono">
-              {task.createdAt.toLocaleDateString("en-US", { month: "short", day: "numeric" })}
-            </span>
+            <Eye className="w-3.5 h-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
           </div>
         </div>
       </div>
